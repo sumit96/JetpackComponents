@@ -19,7 +19,7 @@ class MainActivity : AppCompatActivity() {
         lifecycle.addObserver(ObserverSection())
         textView = findViewById(R.id.textView)
         // It provide the viewModel instance
-        viewModel = ViewModelProvider(this).get(ViewModelObject :: class.java)
+        viewModel = ViewModelProvider(this, ViewModelFactoryObject(10)).get(ViewModelObject :: class.java)
         setText()
         Log.d("MAINDATA", "Activity OnCreate")
     }
