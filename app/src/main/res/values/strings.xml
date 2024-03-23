@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">JetpackComponents</string>
+    <string name="live_data_btn">Set Live Data</string>
+    <string name="update_data_txt">Update Live Data Text</string>
 </resources>

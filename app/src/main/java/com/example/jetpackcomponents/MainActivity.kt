@@ -4,14 +4,22 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.Button
 import android.widget.TextView
 import androidx.lifecycle.ViewModelProvider
 
 // It is called lifecycle owner
-class MainActivity : AppCompatActivity() {
+class MainActivity() : AppCompatActivity() {
 
     lateinit var textView : TextView
     lateinit var viewModel : ViewModelObject
+    lateinit var basicViewModelLive : BasicLiveDataViewModel
+      private val liveTextView : TextView
+         get() = findViewById(R.id.liveTextView)
+
+      private val liveBtn : Button
+        get() = findViewById(R.id.buttonBasicLiveData)
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -20,8 +28,25 @@ class MainActivity : AppCompatActivity() {
         textView = findViewById(R.id.textView)
         // It provide the viewModel instance
         viewModel = ViewModelProvider(this, ViewModelFactoryObject(10)).get(ViewModelObject :: class.java)
+
+        // Creating ViewModel with Live Data and View Model Factory
+        basicViewModelLive = ViewModelProvider(this,BasicViewModelFactory(this)).get(BasicLiveDataViewModel :: class.java)
+        basicViewModelLive.liveData.observe(this, {
+           // Set text with the help of Live data on text view
+            liveTextView.text = it
+        })
+
+        liveBtn.setOnClickListener {
+            // By observing Live data text update on text View
+            // observer observe the live data and when any change in mutable live data
+            // it automatically update the textview
+            basicViewModelLive.updateText()
+        }
+
         setText()
         Log.d("MAINDATA", "Activity OnCreate")
+
+
     }
 
 
